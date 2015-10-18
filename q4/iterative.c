@@ -1,9 +1,25 @@
 /* FIXME: Implement! */
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define MAX(a,b) (a>b?a:b)
 
 int maxSubArray(int A[], int n);
+
+static double diff_in_second(struct timespec t1, struct timespec t2)
+{
+    struct timespec diff;
+    if (t2.tv_nsec-t1.tv_nsec < 0) {
+        diff.tv_sec  = t2.tv_sec - t1.tv_sec - 1;
+        diff.tv_nsec = t2.tv_nsec - t1.tv_nsec + 1000000000;
+    } else {
+        diff.tv_sec  = t2.tv_sec - t1.tv_sec;
+        diff.tv_nsec = t2.tv_nsec - t1.tv_nsec;
+    }
+    return (diff.tv_sec + diff.tv_nsec / 1000000000.0);
+}
+
 
 int main()
 {
@@ -18,8 +34,11 @@ int main()
     char number[4];
     int numArray[25];
     int length = 0;
-    int pNum = 0;
+    int pNum = 0, maxNum;
+    double cpu_time;
+    struct timespec start, end;
 
+    clock_gettime(CLOCK_REALTIME, &start);
     while(fgets(line, 50, fp)) {
         for(int i=0; i<50; i++) {
             if(line[i] == '\0' || line[i] == 32) {
@@ -32,10 +51,15 @@ int main()
             } else
                 number[pNum++] = line[i];
         }
-
-        printf("%d\n", maxSubArray(numArray, length));
+        maxNum = maxSubArray(numArray, length);
+        //printf("%d\n", maxNum);
         length = 0;
     }
+    clock_gettime(CLOCK_REALTIME, &end);
+    cpu_time = diff_in_second(start, end);
+    printf("execution time of maxSubArray(): %lf sec\n", cpu_time);
+
+
     fclose(fp);
 
     return 0;

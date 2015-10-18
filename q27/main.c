@@ -21,24 +21,24 @@ static double diff_in_second(struct timespec t1, struct timespec t2)
 
 int main()
 {
-	double cpu_time;
-	struct timespec start, end;	
-	int *cards;	
+    double cpu_time;
+    struct timespec start, end;
+    int *cards;
 
-	clock_gettime(CLOCK_REALTIME, &start);
+    clock_gettime(CLOCK_REALTIME, &start);
     int count = 10000;
-	srand(time(NULL));
+    srand(time(NULL));
     while(count--) {
-		cards = getCards();
-		/*
+        cards = getCards();
+        /*
         for(int i=0; i<52; ++i)
             printf("%d ", cards[i]);
         printf("\n");*/
     }
-	clock_gettime(CLOCK_REALTIME, &end);
-	cpu_time = diff_in_second(start, end);
-	
-	printf("execution time of getCard(): %lf sec\n", cpu_time);
+    clock_gettime(CLOCK_REALTIME, &end);
+    cpu_time = diff_in_second(start, end);
+
+    printf("execution time of getCard(): %lf sec\n", cpu_time);
 
     return 0;
 }
