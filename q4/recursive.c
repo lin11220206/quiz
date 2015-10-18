@@ -6,8 +6,37 @@ int maxSubArray(int A[], int n);
 
 int main()
 {
-    int a[10] = {-2,1,-1,4,-1,2,1,-5,4};
-    printf("%d\n", maxSubArray(a, 10));
+    FILE *fp;
+    fp = fopen("testFile.txt", "r");
+    if(fp == NULL) {
+        printf("cannot open the file");
+        return -1;
+    }
+
+    char line[50];
+    char number[4];
+    int numArray[25];
+    int length = 0;
+    int pNum = 0;
+
+    while(fgets(line, 50, fp)) {
+        for(int i=0; i<50; i++) {
+            if(line[i] == '\0' || line[i] == 32) {
+                number[pNum] = '\0';
+                numArray[length++] = atoi(number);
+                pNum = 0;
+
+                if(line[i] == '\0')
+                    break;
+            } else
+                number[pNum++] = line[i];
+        }
+
+        printf("%d\n", maxSubArray(numArray, length));
+        length = 0;
+    }
+
+    fclose(fp);
     return 0;
 }
 
