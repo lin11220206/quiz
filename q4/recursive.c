@@ -25,4 +25,3 @@ int maxSubArray(int A[], int n)
 
     maxSubArraySum(A, n, A[0], 0);
 }
-~  
