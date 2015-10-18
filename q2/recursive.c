@@ -27,6 +27,8 @@ int main()
         printf("%c\n", smallest_character(str, c));
         i=0;
     }
+	fclose(fp);
+
     return 0;
 }
 
