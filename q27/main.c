@@ -53,7 +53,7 @@ int *getCards()
         decks[i] = i+1;
 
     for(int i=0, j; i<52; ++i) {
-        j = rand()%52;
+        j = rand()%decksize;
         cards[i] = decks[j];
         decks[j] = decks[decksize-1];
         decksize--;
